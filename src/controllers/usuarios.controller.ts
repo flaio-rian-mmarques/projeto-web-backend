@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { eq } from 'drizzle-orm';
@@ -22,9 +22,9 @@ export const cadastrarUsuario = async (req: Request, res: Response) => {
             nome: dados.nome,
             email: dados.email,
             senha: dados.senha,
-            tipo: dados.tipo,
+            role: dados.role,
             tecnologias: dados.tecnologias,
-        }).returning({ id: usuarios.id, nome: usuarios.nome, tipo: usuarios.tipo }).get();
+        }).returning({ id: usuarios.id, nome: usuarios.nome, role: usuarios.role }).get();
 
         return res.status(201).json({ mensagem: 'Conta criada com sucesso!', usuario: novoUsuario });
     } catch (error: any) {
@@ -41,13 +41,13 @@ export const fazerLogin = async (req: Request, res: Response) => {
             return res.status(401).json({erro: 'Email ou senha inválida'});
         }
 
-        const senhaValida = await bcrypt.compare(dados.senha, usuarios.senha);
+        const senhaValida = await bcrypt.compare(dados.senha, usuario.senha);
         if (!senhaValida) {
             return res.status(401).json({erro: 'Email ou senha inválida'});
         }
 
         const token = jwt.sign(
-            { id: usuario.id, tipo: usuario.tipo },
+            { id: usuario.id, role: usuario.role },
             SEGREDO_JWT,
             { expiresIn: '1d' }
         );

@@ -4,7 +4,7 @@ export const cadastroDTO = z.object({
     nome: z.string(),
     email: z.string().email('Email invalido'),
     senha: z.string().min(6, 'A senha precisa ter, no mínimo, 6 caracteres'),
-    tipo: z.enum(['contratante', 'provedor', 'ADM']),
+    role: z.enum(['contratante', 'provedor', 'ADM']),
     tecnologias: z.string().optional(),
 });
 
