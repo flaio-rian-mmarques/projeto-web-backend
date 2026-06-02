@@ -21,7 +21,7 @@ export const cadastrarUsuario = async (req: Request, res: Response) => {
         const novoUsuario = db.insert(usuarios).values({
             nome: dados.nome,
             email: dados.email,
-            senha: dados.senha,
+            senha: senhaHash,
             role: dados.role,
             tecnologias: dados.tecnologias,
         }).returning({ id: usuarios.id, nome: usuarios.nome, role: usuarios.role }).get();
@@ -38,12 +38,12 @@ export const fazerLogin = async (req: Request, res: Response) => {
         
         const usuario = db.select().from(usuarios).where(eq(usuarios.email, dados.email)).get();
         if (!usuario) {
-            return res.status(401).json({erro: 'Email ou senha inválida'});
+            return res.status(401).json({erro: 'Usuário inexistente'});
         }
 
         const senhaValida = await bcrypt.compare(dados.senha, usuario.senha);
         if (!senhaValida) {
-            return res.status(401).json({erro: 'Email ou senha inválida'});
+            return res.status(401).json({erro: 'Email ou senha inválida...'});
         }
 
         const token = jwt.sign(
