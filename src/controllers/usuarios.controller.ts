@@ -7,7 +7,7 @@ import { usuarios } from '../db/schema.js';
 import { cadastroDTO, loginDTO } from '../dtos/usuarios.dto.js';
 
 const SEGREDO_JWT = 'Y9juy1abcFiu7YgLKOBLeyCV3cxHBB6fRcs31Zq4VugsQgKYucQk3frjqw89yYbt3YFgBab8MCzp7yZJBJJKiFvduSPDuhf'
-
+    
 export const cadastrarUsuario = async (req: Request, res: Response) => {
     try {
         const dados = cadastroDTO.parse(req.body);
