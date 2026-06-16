@@ -2,7 +2,6 @@ import { timestamp } from "drizzle-orm/gel-core";
 import { int } from "drizzle-orm/mysql-core";
 import { sqliteTable, text, integer, SQLiteSelectQueryBuilderBase } from "drizzle-orm/sqlite-core";
 
-// tabela de usuários | users table
 export const usuarios = sqliteTable('usuarios', {
     id: integer('id').primaryKey({ autoIncrement: true }),
     nome: text('nome').notNull(),
@@ -20,5 +19,13 @@ export const servicos = sqliteTable('servicos', {
     preco: integer('preco').notNull(),
     prazoDias: integer('prazo_dias').notNull(),
     provedorId: integer('provedor_id').references(() => usuarios.id).notNull(),
-    criadoEm: integer('criado_em', {mode: 'timestamp'}).$defaultFn(() => new Date()),
+    criadoEm: integer('criado_em', { mode: 'timestamp' }).$defaultFn(() => new Date()),
+});
+
+export const pedidos = sqliteTable('pedidos', {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    servicoId: integer('servico_id').references(() => servicos.id).notNull(),
+    contratanteId: integer('contratante_id').references(() => usuarios.id).notNull(),
+    status: text('status').notNull().default('pendente'),
+    criadoEm: integer('criado_em', { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });

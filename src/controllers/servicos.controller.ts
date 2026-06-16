@@ -6,9 +6,6 @@ import { servicosDTO } from '../dtos/servicos.dto.js';
 export const criarServico = async (req: Request, res: Response) => {
     try {
         const dados = servicosDTO.parse(req.body);
-
-        console.log("DADOS DO TOKEN:", (req as any).usuario);
-
         const provedorId = (req as any).usuario.id;
         const role = (req as any).usuario.role;
 

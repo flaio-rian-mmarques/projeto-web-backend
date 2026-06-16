@@ -1,4 +1,4 @@
-import { preprocess, z } from 'zod';
+import { z } from 'zod';
 
 export const servicosDTO = z.object({
     titulo: z.string().min(3, 'O serviço precisa ter um título válido!'),

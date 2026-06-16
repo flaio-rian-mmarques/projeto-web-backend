@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { usuariosRoutes } from './routes/usuarios.routes.js';
 import { servicosRoutes } from './routes/servicos.routes.js';
+import { pedidosRoutes } from './routes/pedidos.routes.js';
 
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/servicos', servicosRoutes);
+app.use('/api/pedidos', pedidosRoutes);
 
 app.listen(PORTA, () => {
     console.log(`🔥 O monstro tá saindo da jaulaaa, olha a porta: ${PORTA}!`);
