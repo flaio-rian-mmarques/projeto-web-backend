@@ -1,3 +1,4 @@
+import { timestamp } from "drizzle-orm/gel-core";
 import { int } from "drizzle-orm/mysql-core";
 import { sqliteTable, text, integer, SQLiteSelectQueryBuilderBase } from "drizzle-orm/sqlite-core";
 
@@ -18,5 +19,6 @@ export const servicos = sqliteTable('servicos', {
     descricao: text('descricao').notNull(),
     preco: integer('preco').notNull(),
     prazoDias: integer('prazo_dias').notNull(),
-    
+    provedorId: integer('provedor_id').references(() => usuarios.id).notNull(),
+    criadoEm: integer('criado_em', {mode: 'timestamp'}).$defaultFn(() => new Date()),
 });
